@@ -1,0 +1,13 @@
+* text=auto eol=lf
+
+assets/**/* -diff
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ttf binary
+*.woff binary
+*.woff2 binary
+*.otf binary
+*.eot binary

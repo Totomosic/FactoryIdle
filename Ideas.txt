@@ -1,0 +1,37 @@
+Factory style incremental game
+    - Power generation
+    - Automation of the production of product
+    - Automation of collecting raw resources
+    - Managing potential dangers (Overheating, etc.)
+    - Multiple factories for producing different products
+        - Some products used for making others
+        - Some products speed up production of others or increase efficiency
+    - Simple day/night system to affect solar generators
+    - Buildings/Workers require incur a continuous cash cost
+        - Increase worker skill/efficiency
+
+Workers:
+    - Salary based on their total level
+    - Gain levels in certain work fields
+        - Miner, Woodcutter, Factory operator...
+    - Levels increase efficiency in the specific field
+    - Can be reallocated to a new field - levels wasted, etc.
+
+Unlocks:
+    - Unlock access to new land - build new factories
+        - New land can also allow for specialised factories based on land features
+
+Starting off:
+    - Start off with a few workers and some starting cash
+    - Collect raw resources (coal, wood, ore, etc.)
+    - Either sell resources raw to earn starting cash
+        - Or construct basic processing factories such as refining ores
+
+Progression:
+    - Improve power generation
+        - Higher efficiency solar
+        - Nuclear
+        - Hydro/Wind
+    - Create more advanced products
+        - May require other products
+        - Require multiple steps and different types of processing
