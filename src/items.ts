@@ -8,6 +8,7 @@ export interface IItemData {
     name: string
     description?: string
     sellPrice: number
+    image?: string
 }
 
 function registerItem(map: Map<number, IItemData>, data: IItemData) {
@@ -16,4 +17,4 @@ function registerItem(map: Map<number, IItemData>, data: IItemData) {
 
 export const ItemData = new Map<number, IItemData>()
 registerItem(ItemData, { id: ItemId.None, name: "null", sellPrice: 0 })
-registerItem(ItemData, { id: ItemId.Logs, name: "Logs", sellPrice: 1 })
+registerItem(ItemData, { id: ItemId.Logs, name: "Logs", sellPrice: 1, image: "items/logs_oak.svg" })

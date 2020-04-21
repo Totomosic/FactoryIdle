@@ -6,37 +6,45 @@ export interface IStoredItem {
     amount: number
 }
 
+export function getWarehouseItemInfo(warehouse: WarehouseModule, itemId: ItemId): IStoredItem | null {
+    return warehouse._itemMap.get(itemId) || null
+}
+
+export function warehouseHasItem(warehouse: WarehouseModule, itemId: ItemId): boolean {
+    return warehouse._itemMap.has(itemId)
+}
+
 @Module({ name: 'warehouse' })
 export class WarehouseModule extends VuexModule {
-    public capacity: number = 0
-    public storedItems: Map<ItemId, number> = new Map<ItemId, number>()
+    public capacity: number = 5
+    public storedItems: IStoredItem[] = []
+    public _itemMap = new Map<ItemId, IStoredItem>()
 
     @Mutation
-    public addItem(itemId: ItemId, amount: number = 1): boolean {
-        const existingAmount = this.storedItems.get(itemId)
-        if (existingAmount !== undefined) {
-            this.storedItems.set(itemId, existingAmount + amount)
-            return true
+    public addItem({ itemId, amount }: { itemId: ItemId, amount?: number }) {
+        const amt = amount === undefined ? 1 : amount
+        const info = getWarehouseItemInfo(this, itemId)
+        if (info !== null) {
+            info.amount += amt
+        } else if (this.storedItems.length < this.capacity) {
+            const item: IStoredItem = { id: itemId, amount: amt }
+            this.storedItems.push(item)
+            this._itemMap.set(itemId, item)
         }
-        if (this.storedItems.size < this.capacity) {
-            this.storedItems.set(itemId, amount)
-            return true
-        }
-        return false
     }
 
     @Mutation
-    public removeItem(itemId: ItemId, amount: number): boolean {
-        const existingAmount = this.storedItems.get(itemId)
-        if (existingAmount !== undefined && existingAmount >= amount) {
-            const remaining = existingAmount - amount
-            if (remaining > 0) {
-                this.storedItems.set(itemId, remaining)
-            } else {
-                this.storedItems.delete(itemId)
+    public removeItem({ itemId, amount }: { itemId: ItemId, amount: number }) {
+        const info = getWarehouseItemInfo(this, itemId)
+        if (info !== null && info.amount >= amount) {
+            info.amount -= amount
+            if (info.amount <= 0) {
+                const index = this.storedItems.indexOf(info)
+                if (index >= 0) {
+                    this.storedItems.splice(index, 1)
+                    this._itemMap.delete(info.id)
+                }
             }
-            return true
         }
-        return false
     }
 }

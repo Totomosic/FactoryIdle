@@ -1,6 +1,6 @@
 import { ApiBase } from "./api_base";
 import { ItemId } from "../items";
-import { WarehouseModule } from "../store/modules/warehouse";
+import { WarehouseModule, warehouseHasItem, getWarehouseItemInfo, IStoredItem } from "../store/modules/warehouse";
 import store from "../store/store";
 import { getModule } from "vuex-module-decorators";
 
@@ -18,26 +18,34 @@ export class WarehouseApi {
     }
 
     public get isFull(): boolean {
-        return this.module.storedItems.size === this.capacity
+        return this.module.storedItems.length === this.capacity
+    }
+
+    public get capacityUsed(): number {
+        return this.module.storedItems.length
+    }
+
+    public get storedItems(): IStoredItem[] {
+        return this.module.storedItems
     }
 
     public hasItem(itemId: ItemId): boolean {
-        return this.module.storedItems.has(itemId)
+        return warehouseHasItem(this.module, itemId)
     }
 
     public getItemCount(itemId: ItemId): number {
-        const count = this.module.storedItems.get(itemId)
-        if (count !== undefined) {
-            return count
+        const info = getWarehouseItemInfo(this.module, itemId)
+        if (info !== null) {
+            return info.amount
         }
         return 0
     }
 
-    public storeItem(itemId: ItemId, amount: number = 1): boolean {
-        return this.module.addItem(itemId, amount)
+    public storeItem(itemId: ItemId, amount: number = 1) {
+        this.module.addItem({itemId, amount})
     }
 
-    public removeItem(itemId: ItemId, amount: number): boolean {
-        return this.module.removeItem(itemId, amount)
+    public removeItem(itemId: ItemId, amount: number) {
+        this.module.removeItem({itemId, amount})
     }
 }

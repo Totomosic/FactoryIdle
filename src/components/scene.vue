@@ -24,8 +24,8 @@
 
 <style>
     :root {
-        --title-width: 15%;
-        --header-width: calc(100% - var(--title-width));
+        --title-width: 15vw;
+        --header-width: calc(100vw - var(--title-width));
     }
 </style>
 
@@ -53,7 +53,7 @@
         min-width: var(--header-width);
         height: 50px;
         font-size: 20px;
-        font-weight: bolder;
+        font-weight: bold;
         background-color: rgb(161, 130, 27);
         line-height: 45px;
         color: #EBEBEB
@@ -66,14 +66,14 @@
     .sidebar {
         width: var(--title-width);
         min-width: var(--title-width);
-        height: 100%;
-        min-height: 100%;
+        height: calc(100vh - 50px);
+        min-height: calc(100vh - 50px);
         background-color: #444455;
     }
 
     .selected-page {
         min-width: var(--header-width);
-        min-height: var(--header-width);
+        min-height: calc(100vh - 50px);
     }
 
 </style>
@@ -90,9 +90,34 @@
                 currentIndex: 0,
                 submenus: [
                     {
+                        name: "Shop",
+                        icon: "el-icon-wallet",
+                        component: null
+                    },
+                    {
                         name: "Warehouse",
                         icon: "el-icon-present",
                         component: WarehouseComponent
+                    },
+                    {
+                        name: "Workforce",
+                        icon: "el-icon-user-solid",
+                        component: null
+                    },
+                    {
+                        name: "Resources",
+                        icon: "el-icon-truck",
+                        component: null
+                    },
+                    {
+                        name: "Processing",
+                        icon: "el-icon-office-building",
+                        component: null
+                    },
+                    {
+                        name: "Trade",
+                        icon: "el-icon-coin",
+                        component: null
                     },
                     {
                         name: "Settings",
