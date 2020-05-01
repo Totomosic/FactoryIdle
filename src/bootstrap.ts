@@ -19,6 +19,6 @@ export function init(): ApiBase {
             }
         }
     });
-    (window as any)["api"] = api
+    (window as any).api = api
     return api
 }

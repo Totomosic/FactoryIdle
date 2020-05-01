@@ -1,5 +1,6 @@
 const path = require('path')
 const { VueLoaderPlugin } = require('vue-loader')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   entry: './src/app.ts',
@@ -22,6 +23,10 @@ module.exports = {
       {
         test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
         loader: 'file-loader?name=fonts/[name].[ext]&publicPath=/static/',
+      },
+      {
+        test: /\.html$/,
+        loader: 'file-loader?name=../[name].[ext]&publicPath=/static/'
       }
     ],
   },
@@ -32,11 +37,12 @@ module.exports = {
     }
   },
   plugins: [
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    new CopyWebpackPlugin([{ from: './images', to: 'images' }])
   ],
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, 'assets/static'),
+    path: path.resolve(__dirname, 'dist/static'),
   },
   mode: 'development'
 }

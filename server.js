@@ -1,22 +1,15 @@
 const express = require("express")
 const { spawn } = require("child_process")
+const path = require("path")
 const app = express()
 
 const config = require("./server_config.json")
 
 const port = config.port || 8000
 
-app.use("", express.static('./public'))
-app.use("", express.static('./assets'))
-app.use("", express.static('./images'))
+app.use("", express.static('./dist'))
 
-const wp = spawn("build_src.bat")
-wp.stdout.on('data', (data) => {
-    console.log(`${data}`);
-})
-wp.stderr.on('data', (data) => {
-    console.error(`${data}`);
-})
+const wp = spawn(path.resolve("./node_modules/.bin/webpack.cmd"), ["-w"], { stdio: "inherit" })
 wp.on('close', (code) => {
     console.log(`child process exited with code ${code}`);
 })
